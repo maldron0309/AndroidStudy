@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.resultapi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,32 +19,27 @@ public class SubActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sub);
 
         edit = findViewById(R.id.edit);
-        Button button_ok = findViewById(R.id.button_ok);
-        Button button_cancel = findViewById(R.id.button_cancel);
-
-        button_ok.setOnClickListener(v->{
-            // 성공
-            String sendData = edit.getText().toString().trim().replaceAll(" ","");
+        button_ok = findViewById(R.id.button_ok);
+        button_cancel  = findViewById(R.id.button_cancel);
+//        RESULT_OK -> 작업 성공
+//        RESULT_CANCELED -> 작업 실패
+//        RESULT_FIRST_USER -> 사용자 정의 코드
+        button_ok.setOnClickListener(v-> {
+            String sendData = edit.getText().toString().trim().replace(" ","");
             Log.i("checkData","checkData"+sendData);
-            if (sendData.length() == 0){
-                Toast.makeText(getApplicationContext(),"공백은 전송 불가",Toast.LENGTH_SHORT).show();
+            if (sendData.length() == 0) {
+                Toast.makeText(getApplicationContext(), "공백은 전송이 불가능 합니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
             Intent sendIntent = new Intent();
             sendIntent.putExtra("INPUT_TEXT",sendData);
-            sendResult(RESULT_OK,sendIntent);
+            setResult(RESULT_OK,sendIntent);
             finish();
         });
 
-        button_cancel.setOnClickListener(v->{
+        button_cancel.setOnClickListener(v-> {
             setResult(RESULT_CANCELED);
             finish();
         });
-
-
-
-    }
-
-    private void sendResult(int resultOk, Intent sendIntent) {
     }
 }
